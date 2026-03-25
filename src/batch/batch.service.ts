@@ -49,8 +49,8 @@ export class BatchService {
     this.logger.log(`[calcTtl] finished`);
   }
 
-  // @Cron(CronExpression.EVERY_1ST_DAY_OF_MONTH_AT_NOON)
-  @Timeout(1000)
+  // 매월 1일 12시. 최근 7일 이전의 명령어 조회 이력을 아카이브.
+  @Cron(CronExpression.EVERY_1ST_DAY_OF_MONTH_AT_NOON)
   async archiveCommandLog() {
     this.logger.log(`[archiveCommandLog] started`);
     await this.commandLogService.archiveLogs();
