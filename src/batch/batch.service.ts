@@ -13,8 +13,7 @@ export class BatchService {
   ) {}
 
   // 최근 7일간의 명령어 조회 이력을 토대로 P90 TTL 계산+갱신. 2026-03-26 01:00:00 실행 시, 0319 00:00:00 ~ 0325 23:59:59.
-  // @Cron(CronExpression.EVERY_DAY_AT_1AM)
-  @Timeout(1000)
+  @Cron(CronExpression.EVERY_DAY_AT_1AM)
   async calcTtl() {
     this.logger.log(`[calcTtl] started`);
     const logs = await this.commandLogService.getLast7dLogs();
@@ -51,7 +50,7 @@ export class BatchService {
   }
 
   // @Cron(CronExpression.EVERY_1ST_DAY_OF_MONTH_AT_NOON)
-  // @Timeout(1000)
+  @Timeout(1000)
   async archiveCommandLog() {
     this.logger.log(`[archiveCommandLog] started`);
     await this.commandLogService.archiveLogs();
